@@ -1,0 +1,165 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block css %}
+<link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Create an Invoice</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <a href="{% url 'invoices' %}"><button type="button" class="btn btn-primary">Go Back</button></a>
+      </div>
+    </div>
+  </div>
+
+
+
+    <div class="container-fluid">
+    <div class="card">
+      <div class="card-header">
+        Skolo Online Invoice Generator
+      </div>
+
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-lg-12">
+            <h5 class="card-title">Add Products to your invoice
+              <button href="#addProductModal" type="button" class="btn btn-link" data-bs-toggle="modal"> ADD PRODUCT </button>
+            </h5>
+
+            {% if products|length > 0 %}
+            <div class="table-responsive">
+              <table class="table table-striped table-sm">
+                <thead>
+                  <tr>
+
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Related Invoice</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {% for product in products %}
+                <tr>
+                  <td>{{product.title}}</td>
+                  <td>{{product.description}}</td>
+                  <td>{{product.quantity}}</td>
+                  <td>{{product.currency}} {{product.price}}</td>
+                  <td>{{product.invoice.number}}</td>
+                </tr>
+                  {% endfor %}
+
+                </tbody>
+              </table>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <br>
+
+
+        <div class="row">
+          <div class="col-lg-6">
+
+            <form class="" action="#" method="post">
+
+              {% csrf_token %}
+              {% crispy inv_form %}
+
+            </form>
+
+          </div>
+          <div class="col-lg-6">
+            <h5 class="card-title"> Select Client to Add </h5>
+            <br>
+            <h5 class="card-title"> Current Client: <span class="badge bg-success">{{invoice.client.clientName}}</span> </h5>
+            <br>
+
+            <div class="mb-5">
+              <form class="" action="#" method="post">
+                {% csrf_token %}
+
+                {{client_form|crispy}}
+
+                <button type="submit" class="btn btn-primary">ADD CLIENT</button>
+              </form>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4">
+                <a href="{% url 'view-pdf-invoice' invoice.slug %}"><button class="btn btn-info text-white"> VIEW CLIENT INVOICE </button></a>
+              </div>
+              <div class="col-lg-4">
+                <a href="{% url 'view-document-invoice' invoice.slug %}"><button class="btn btn-success text-white"> VIEW PDF INVOICE </button></a>
+              </div>
+              <div class="col-lg-4">
+                <a href="{% url 'email-document-invoice' invoice.slug %}"><button class="btn btn-warning text-white"> EMAIL CLIENT INVOICE </button></a>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- MODALS MODALS -->
+    <!-- Modals Start Here -->
+    <div class="modal modal-sheet py-5" tabindex="-1" id="addProductModal">
+    <div class="modal-dialog">
+      <div class="modal-content rounded-6 shadow">
+
+        <form class="" action="#" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title">Add Invoice Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body py-0">
+
+
+          {{prod_form.as_p}}
+
+
+        </div>
+        <div class="modal-footer flex-column border-top-0">
+          <button type="submit" class="btn btn-lg btn-primary w-100 mx-0 mb-2">Save changes</button>
+        </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

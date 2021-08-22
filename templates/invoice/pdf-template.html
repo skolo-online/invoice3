@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{{p_settings.clientName}}</title>
+
+    <style >
+
+      .container {
+        margin-left: 50px;
+        margin-right: 50px;
+      }
+
+  table {
+    caption-side: bottom;
+    border-collapse: collapse; }
+
+    th {
+      text-align: inherit;
+      text-align: -webkit-match-parent; }
+
+    thead,
+    tbody,
+    tfoot,
+    tr,
+    td,
+    th {
+      border-color: inherit;
+      border-style: solid;
+      border-width: 0; }
+
+      .table {
+        --bs-table-bg: transparent;
+        --bs-table-striped-color: #495057;
+        --bs-table-striped-bg: #f8f9fa;
+        --bs-table-active-color: #495057;
+        --bs-table-active-bg: #f8f9fa;
+        --bs-table-hover-color: #495057;
+        --bs-table-hover-bg: #f8f9fa;
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #495057;
+        vertical-align: top;
+        border-color: #eff2f7; }
+        .table > :not(caption) > * > * {
+          padding: 0.75rem 0.75rem;
+          background-color: var(--bs-table-bg);
+          background-image: -webkit-gradient(linear, right top, right bottom, from(var(--bs-table-accent-bg)), to(var(--bs-table-accent-bg)));
+          background-image: linear-gradient(var(--bs-table-accent-bg), var(--bs-table-accent-bg));
+          border-bottom-width: 0px; }
+        .table > tbody {
+          vertical-align: inherit; }
+        .table > thead {
+          vertical-align: bottom; }
+        .table > :not(:last-child) > :last-child > * {
+          border-bottom-color: #eff2f7; }
+
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; }
+
+    .d-table {
+      display: table !important; }
+
+      .table th {
+        font-weight: 600; }
+
+
+</style>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <h1>Invoice: {{p_settings.clientName}}</h1>
+      <br>
+      <hr>
+      <br>
+      <br>
+
+
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td><img src="https://host.tatiblockchain.co.za/img/skolo_logo.png" style="width: 100%; max-width: 100px" /></td>
+              <td></td>
+              <td></td>
+              <td>
+                Invoice #: <strong>{{invoice.number}}</strong><br />
+                Created: {{invoice.date_created|date}}<br />
+                Due: {{invoice.dueDate}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+      <br>
+
+
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                <strong>{{p_settings.clientName}}</strong> <br />
+                {{p_settings.addressLine1}}<br />
+                {{p_settings.province}}, {{p_settings.postalCode}} <br/ >
+                {{p_settings.emailAddress}} <br/ >
+                {{p_settings.phoneNumber}}
+                <br>
+                <br>
+                Tax Number: {{p_settings.taxNumber}}
+              </td>
+
+              <td>
+                <strong>{{invoice.client.clientName}}</strong> <br />
+                {{invoice.client.addressLine1}}<br />
+                {{invoice.client.province}}, {{invoice.client.postalCode}}<br />
+                {{invoice.client.emailAddress}} <br/ >
+                {{invoice.client.phoneNumber}}
+                <br>
+                <br>
+                Tax Number: {{invoice.client.taxNumber}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <br>
+      <br>
+      <h1>Invoice Items</h1>
+      <br>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+
+
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <td>{{product.title}}</td>
+              <td>{{product.quantity}}</td>
+    					<td>{{product.currency}} {{product.price}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+              <td></td>
+              <td></td>
+              <td> <strong> Total: {{invoiceTotal}} </strong> </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+      <br>
+      <br>
+      <p>
+        {{invoice.notes}}
+      </p>
+
+
+
+
+
+    </div>
+
+  </body>
+</html>

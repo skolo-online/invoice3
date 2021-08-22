@@ -1,0 +1,81 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block css %}
+<link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+
+
+{% block main %}
+
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Invoices</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <a href="{% url 'create-invoice' %}"><button type="button" class="btn btn-primary">Add New Invoice</button></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
+
+  {% if invoices|length > 0 %}
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Client name</th>
+          <th>Phone Number</th>
+          <th>Due Date</th>
+          <th>Invoice Status</th>
+          <th>Delete</th>
+          <th>View</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for invoice in invoices %}
+      <tr>
+        <td>{{invoice.number}}</td>
+        <td>{{invoice.title}}</td>
+        <td>{{invoice.client.clientName}}</td>
+        <td>{{invoice.client.phoneNumber}}</td>
+        <td>{{invoice.dueDate}}</td>
+        <td>{{invoice.status}}</td>
+        <td>
+          <a href="{% url 'delete-invoice' invoice.slug %}"><button class="btn btn-danger"> DELETE </button></a>
+        </td>
+        <td>
+          <a href="{% url 'create-build-invoice' invoice.slug %}"><button class="btn btn-primary"> VIEW </button></a>
+        </td>
+      </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="row">
+    <div class="col-lg-2">
+
+    </div>
+    <div class="col-lg-8">
+      <h3>Start by Adding First Invoice</h3>
+      <img class=img-fluid src="{% static 'assets/img/empty.svg' %}" alt="Skolo Online Learning">
+    </div>
+    <div class="col-lg-3">
+
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+{% endblock %}

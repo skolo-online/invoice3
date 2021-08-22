@@ -1,0 +1,51 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block main %}
+
+
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Company Settings</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-lg-6">
+            <h5 class="card-title">Company Name: {{company.clientName}}</h5>
+            <hr>
+            <p class="card-text"><strong>Address:</strong> {{company.addressLine1}}</p>
+            <p class="card-text"><strong>Province:</strong> {{company.province}}</p>
+            <p class="card-text"><strong>Postal Code:</strong> {{company.postalCode}}</p>
+            <br>
+            <p class="card-text"><strong>Phone Number:</strong> {{company.phoneNumber}}</p>
+            <p class="card-text"><strong>Email:</strong> {{company.emailAddress}}</p>
+            <br>
+            <p class="card-text"><strong>Tax Number:</strong> {{company.taxNumber}}</p>
+          </div>
+
+
+          <div class="col-lg-5">
+            <div class="p-5">
+            <img class=img-fluid  src="{% static 'assets/img/empty.svg' %}" alt="Skolo Online Learning">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
